@@ -8,5 +8,55 @@
     "object_id" : "tree1_horizontal_mid",
     "x" : 0,
     "y" : 0
+  },
+  "2" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 2,
+    "y" : 0
+  },
+  "3" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 4,
+    "y" : 0
+  },
+  "4" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 6,
+    "y" : 0
+  },
+  "5" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 8,
+    "y" : 0
+  },
+  "6" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 10,
+    "y" : 0
+  },
+  "7" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 12,
+    "y" : 0
+  },
+  "8" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 14,
+    "y" : 0
+  },
+  "9" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 16,
+    "y" : 0
+  },
+  "10" : {
+    "object_id" : "tree1_horizontal_mid",
+    "x" : 18,
+    "y" : 0
+  },
+  "11" : {
+    "object_id" : "fountain",
+    "x" : 8,
+    "y" : 5
   }
 }

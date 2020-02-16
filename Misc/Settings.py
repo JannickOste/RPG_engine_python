@@ -7,10 +7,7 @@ FILEPATHS = {
     "config" : "Lib\\Cfg"
 }
 
-
 WINDOW_SIZE = (1024, 768)
 TILESIZE = 32
 ENABLE_GRID = True
 FPS = 60
-
-PLAYER_SPEED = 6

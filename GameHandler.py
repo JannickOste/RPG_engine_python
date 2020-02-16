@@ -125,9 +125,6 @@ class GameHandler:
                         if not isinstance(object_data["x"], list) and not isinstance(object_data["y"] , list):
                             GameObject(self, x+object_data["x"], y+object_data["y"], set_tiles[y][x])
 
-
-
-
             # If object is not found in spritesets and is not player.
             elif object_data["object_id"] != "player":
                 GameObject(self, object_data["x"], object_data["y"], object_data["object_id"])
