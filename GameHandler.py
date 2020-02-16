@@ -55,6 +55,7 @@ class GameHandler:
         self.gamestate = "camelot"
         self.clock = pg.time.Clock()
         self.window = pg.display.set_mode(WINDOW_SIZE)
+        self.delta = self.clock.tick(FPS) / 1000
 
         # Game Handlers
         self.event_handler = EventHandler(game_obj)
@@ -97,7 +98,6 @@ class GameHandler:
     def update(self):
         for sprite_group in list(self.sprites.keys()):
             self.sprites[sprite_group].update()
-
         self.camera.update(self.player)
 
 

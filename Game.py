@@ -1,5 +1,7 @@
 from GameHandler import GameHandler
+
 from Misc.Settings import *
+
 import pygame as pg
 
 """
