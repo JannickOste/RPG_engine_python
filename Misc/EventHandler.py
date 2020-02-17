@@ -20,11 +20,16 @@ class EventHandler(object):
         keys = pg.key.get_pressed()
 
         if not self.game.player.moving:
-            if keys[pg.K_LEFT] or keys[pg.K_q]:
+            if keys[pg.K_LEFT]:
                 self.game.player.move(x=-1)
-            if keys[pg.K_RIGHT] or keys[pg.K_d]:
+            if keys[pg.K_RIGHT]:
                 self.game.player.move(x=1)
-            if keys[pg.K_UP] or keys[pg.K_z]:
+            if keys[pg.K_UP]:
                 self.game.player.move(y=-1)
-            if keys[pg.K_DOWN] or keys[pg.K_s]:
+            if keys[pg.K_DOWN]:
                 self.game.player.move(y=1)
+
+            if keys[pg.K_a]:
+                self.game.player.running = True
+            else:
+                self.game.player.running = False

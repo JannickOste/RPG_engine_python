@@ -9,7 +9,8 @@ class SpriteLoader:
         self.game = game_obj
         self.root_path = FILEPATHS["spritesheets"]
         self.sprites = {}
-        self.tile_config = open_file(join(FILEPATHS["config"], "tileconfig.json"))
+        self.tile_config = open_file(join(FILEPATHS["config"], "tile_config.json"))
+        self.sprite_sets = open_file(join(FILEPATHS["config"], "spritesheet_sets.json"))
         self.load_sprites()
 
     def load_sprites(self):
@@ -43,4 +44,9 @@ class SpriteLoader:
         self.sprites = image_set
 
     def get_tile(self, tile_id=0):
-        return self.sprites[tile_id]
+        return self.sprites[int(tile_id)]
+
+    def load_spriteset(self, group_identifier):
+        if has_key(group_identifier, self.sprite_sets):
+            return self.sprite_sets[group_identifier]
+        return False

@@ -1,0 +1,21 @@
+{
+  "0" : {
+      "walkable" : true,
+      "category" : "terrain"
+  },
+  "8" : {
+      "colorkey" : [0, 0, 0]
+  },
+  "9" : {
+      "colorkey" : [0, 0, 0]
+  },
+  "16" : {
+      "colorkey" : [0, 0, 0]
+  },
+  "17" : {
+      "colorkey" : [0, 0, 0]
+  },
+  "1065" : {
+      "colorkey" :[120, 195, 128]
+  }
+}

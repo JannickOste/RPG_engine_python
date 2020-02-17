@@ -62,7 +62,9 @@ class GameHandler:
         self.sprite_handler = SpriteLoader(game_obj)
         self.map_handler = MapBuilder(game_obj)
         self.map_handler.load()
-        self.camera = Camera(self.map_handler.x_rows * TILESIZE, self.map_handler.y_rows * TILESIZE)
+
+        self.camera = Camera(self.map_handler.map_config["current_map"]["x_rows"]*TILESIZE,
+                             self.map_handler.map_config["current_map"]["y_rows"]*TILESIZE)
 
 
     '''
@@ -99,35 +101,3 @@ class GameHandler:
         for sprite_group in list(self.sprites.keys()):
             self.sprites[sprite_group].update()
         self.camera.update(self.player)
-
-
-    '''
-        @func: spawn_objects()
-        @desc: 
-            * Will create all ingame objects, like tiles, houses, player at start of game loop.
-    '''
-    def spawn_objects(self):
-        # Spawn floor tiles from map configuration.
-        for y in range(0, self.map_handler.y_rows-1):
-            for x in range(0, self.map_handler.x_rows-1):
-                if self.map_handler.map_data[y][x] != "":
-                    FloorTile(self, x, y, int(self.map_handler.map_data[y][x]))
-
-        # Spawn objects on top of tiles.
-        for key in list(self.map_handler.map_objects.keys()):
-            object_data = self.map_handler.map_objects[key]
-            print(self.map_handler.sprite_sets.keys())
-            # If object id has been found in spritesets.
-            if object_data["object_id"] in list(self.map_handler.sprite_sets.keys()):
-                set_tiles = self.map_handler.sprite_sets[object_data["object_id"]]
-                for y in range(len(set_tiles)):
-                    for x in range(len(set_tiles[y])):
-                        if not isinstance(object_data["x"], list) and not isinstance(object_data["y"] , list):
-                            GameObject(self, x+object_data["x"], y+object_data["y"], set_tiles[y][x])
-
-            # If object is not found in spritesets and is not player.
-            elif object_data["object_id"] != "player":
-                GameObject(self, object_data["x"], object_data["y"], object_data["object_id"])
-            # Else spawn player.
-            else:
-                self.player = Player(self, object_data["x"], object_data["y"])
