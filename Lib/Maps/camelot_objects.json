@@ -8,5 +8,15 @@
     "object_id" : "tree1_horizontal_mid",
     "x" : [0, 64],
     "y" : 0
+  },
+  "2" : {
+    "object_id" : "tree1_vertical_mid",
+    "x" : 0,
+    "y" : [7, 64]
+  },
+  "3" : {
+    "object_id" : "fountain",
+    "x" : 10,
+    "y" : 10
   }
 }

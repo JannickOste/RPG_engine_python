@@ -10,8 +10,7 @@ from World.MapHandler import MapHandler
 
 class MapBuilder(MapHandler):
     def __init__(self, gameobj):
-        super().__init__()
-        self.game = gameobj
+        super().__init__(gameobj)
 
     '''
         @func: spawn_objects()
