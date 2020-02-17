@@ -1,11 +1,12 @@
 from Gfx.SpriteTemplate import SpriteTemplate
 from Misc.Settings import *
 import pygame as pg
+from random import choice
 
 class Player(SpriteTemplate):
     def __init__(self, game, x, y):
         self.game = game
-        super().__init__(game, x, y, self.game.sprites["player"], self.game.sprite_handler.get_tile(1065))
+        super().__init__(game, x, y, self.game.sprites["player"], self.game.sprite_handler.get_tile(1066))
         self.direction = "down"
         self.moving = False
         self.running = False
@@ -53,6 +54,25 @@ class Player(SpriteTemplate):
         self.rect.x = x*TILESIZE
         self.rect.y = y*TILESIZE
 
+    def get_player_image(self):
+        image_set = self.game.sprite_handler.load_spriteset("npc_1")
+        image = self.image
+
+        if self.moving:
+            if self.direction == "down":
+                down = image_set[0]
+                image = self.game.sprite_handler.get_tile(choice(down))
+            elif self.direction == "left":
+                left = image_set[1]
+                image = self.game.sprite_handler.get_tile(choice(left))
+            elif self.direction == "right":
+                right = image_set[2]
+                image = self.game.sprite_handler.get_tile(choice(right))
+            elif self.direction == "up":
+                up = image_set[3]
+                image = self.game.sprite_handler.get_tile(choice(up))
+        self.image = image
+        return self.image
     def move_animation(self):
         if self.moving:
             speed = self.player_speed if not self.running else self.player_speed // 1.3

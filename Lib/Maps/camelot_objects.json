@@ -10,13 +10,33 @@
     "y" : 0
   },
   "2" : {
+    "object_id" : 8,
+    "x" : 0,
+    "y" : 6
+  },
+  "3" : {
+    "object_id" : 9,
+    "x" : 1,
+    "y" : 6
+  },
+  "4" : {
     "object_id" : "tree1_vertical_mid",
     "x" : 0,
     "y" : [7, 64]
   },
-  "3" : {
+  "5" : {
     "object_id" : "fountain",
     "x" : 10,
     "y" : 10
+  },
+  "6": {
+    "object_id" : "bench",
+    "x" : 4,
+    "y" : 2
+  },
+  "7": {
+    "object_id" : "bench",
+    "x" : 4,
+    "y" : 5
   }
 }
