@@ -24,3 +24,4 @@ def open_file(filepath):
         reader.close()
     return lines
 
+

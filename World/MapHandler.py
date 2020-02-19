@@ -1,5 +1,9 @@
-from Entity.GameObject import GameObject
-from Misc.FileIO import *
+import itertools
+
+from Entity.Entity import Entity
+from Entity.Player import Player
+from World.GameObject import GameObject
+
 from Misc.Settings import *
 
 
@@ -7,31 +11,7 @@ class MapHandler:
     def __init__(self, game):
         self.map_config = {"current_map"}
         self.game = game
-
-    def get_map_configuration(self):
-        current_map_values = {
-            'tiles': [line.strip("\n").split(" ") for line in
-                      open_file(join(FILEPATHS["maps"], self.game.gamestate + ".cfg"))],
-            'objects': open_file(join(FILEPATHS["maps"], self.game.gamestate + "_objects.json"))
-        }
-
-        global_map_values = {
-            "tile_configuration": load_configuration("config", "tile_config.json")
-        }
-
-        self.map_config = {
-            "current_map": {
-                **current_map_values,
-                **{
-                    "y_rows": len(current_map_values["tiles"]),
-                    "x_rows": len(current_map_values["tiles"][0])
-                }
-            },
-            "global": {
-                **global_map_values
-            }
-        }
-        self.get_adjective()
+        self.map_buffer = {}
 
     def is_teleport_tile(self, dest_x, dest_y):
         for object_id in list(self.map_config["current_map"]["objects"].keys()):
@@ -41,91 +21,82 @@ class MapHandler:
                     return True
         return False
 
-    def get_adjective(self):
-        pos_list = []
+    def is_map_changer(self, dest_x, dest_y):
         for object_id in list(self.map_config["current_map"]["objects"].keys()):
             current_obj = self.map_config["current_map"]["objects"][object_id]
-            if current_obj["object_id"] != "player":
-                skip = False
-                if has_key("walkable", current_obj):
-                    skip = current_obj["walkable"]
+            if 'gamestate' in list_keys(current_obj):
+                if current_obj["x"] == dest_x//TILESIZE and current_obj["y"] == dest_y//TILESIZE:
+                    self.game.gamestate = current_obj["gamestate"]
+                    return True
+        return False
 
-                if not skip:
-                    x, y = current_obj["x"], current_obj["y"]
-                    x_is_list, y_is_list = isinstance(x, list), isinstance(y, list)
-                    if isinstance(current_obj["object_id"], int) or str(current_obj["object_id"]).isdigit():
-                        if x_is_list and not y_is_list:
-                            for cur_x in range(x[0], x[1]):
-                                pos_list.append([cur_x, y])
-                        if y_is_list and not x_is_list:
-                            for cur_y in range(y[0], y[1]):
-                                pos_list.append([x, cur_y])
-                        if not x_is_list and not y_is_list:
-                            pos_list.append([x, y])
-                    elif has_key(current_obj["object_id"], self.game.sprite_handler.sprite_sets):
-                        set_info = self.game.sprite_handler.load_spriteset(current_obj["object_id"])
+    def new_map_name(self, dest_x, dest_y):
+        for object_id in list(self.map_config["current_map"]["objects"].keys()):
+            current_obj = self.map_config["current_map"]["objects"][object_id]
+            if 'gamestate' in list_keys(current_obj):
+                if current_obj["x"] == dest_x//TILESIZE and current_obj["y"] == dest_y//TILESIZE:
+                    return current_obj["gamestate"]
+        return False
 
-                        if not y_is_list and not x_is_list:
-                            if not isinstance(set_info[0], int):
-                                for y_row in range(len(set_info)):
-                                    for x_row in range(0, len(set_info[y_row])):
-                                        pos_list.append([x + x_row, y + y_row])
-                        elif y_is_list and not x_is_list:
-                            offset_list = [y for y in range(y[0], y[1], len(set_info))]
-                            for index in range(len(offset_list)):
-                                for y_row in range(len(set_info)):
-                                    for x_row in range(0, len(set_info[y_row])):
-                                        pos_list.append([x + x_row, offset_list[index] + y_row])
-                        elif x_is_list and not y_is_list:
-                            offset_list = [x for x in range(x[0], x[1], len(set_info))]
-                            for index in range(len(offset_list)):
-                                for y_row in range(len(set_info)):
-                                    for x_row in range(0, len(set_info[y_row])):
-                                        pos_list.append([offset_list[index] + x_row, y + y_row])
-        self.map_config["current_map"]["adjective"] = pos_list
+    def spawn_entitys(self):
+        for entity in self.map_config["current_map"]["entitys"]:
+            current_entity = self.map_config["current_map"]["entitys"][entity]
 
-    def path_walkable(self, dest_x, dest_y):
-        adjective_paths = self.map_config["current_map"]["adjective"]
-        for path in adjective_paths:
-            if dest_x == path[0] * TILESIZE and dest_y == path[1] * TILESIZE:
-                return False
+            if entity == "player":
+                self.game.entity_handler.set_entity(current_entity["x"], current_entity["y"], current_entity["id"], player=True)
+            else:
+                self.game.entity_handler.set_entity(current_entity["x"], current_entity["y"], current_entity["id"])
+
+
+
+    #  Check or destination path is actually accessible
+    def path_walkable(self, entity):
+        sprite_lib = self.game.sprites
+        for game_object in itertools.chain(sprite_lib["objects"], sprite_lib["tiles"]):
+            if all([entity.dest_x//TILESIZE == game_object.x, entity.dest_y//TILESIZE == game_object.y]) \
+                    or any([isinstance(entity.rect.x, float), isinstance(entity.rect.y, float)]):
+                if not game_object.walkable:
+                    print(entity.rect.y, entity.dest_y)
+                    return False
         return True
+
 
     def get_teleport_location(self, dest_x, dest_y):
         for object_id in list(self.map_config["current_map"]["objects"].keys()):
             current_obj = self.map_config["current_map"]["objects"][object_id]
 
             if has_key("teleport", self.map_objects[object_id]):
-                if self.map_objects[object_id]["x"] == dest_x and self.map_objects[object_id]["y"] == dest_y:
-                    return self.map_objects[object_id]["teleport"]
+                if current_obj["x"] == dest_x and current_obj["y"] == dest_y:
+                    return current_obj["teleport"]
         return False
 
-    def make_object(self, x=0, y=0, object_id=None):
+    def make_object(self, walkable, x=0, y=0, object_id=None):
         def fixed_draw():
             # Make single object at fixed position.
             if isinstance(object_id, int):
-                GameObject(self.game, x, y, object_id)
+                GameObject(self.game, x, y, object_id, walkable=walkable)
             elif isinstance(object_id, list):
                 if not isinstance(object_id[0], int):
                     for set_y in range(len(object_id)):
                         for set_x in range(len(object_id[0])):
-                            self.make_object(x=x + set_x, y=y + set_y, object_id=object_id[set_y][set_x])
+                            self.make_object(walkable, x=x + set_x, y=y + set_y, object_id=object_id[set_y][set_x])
                 else:
                     for offset in range(len(object_id)):
                         if isinstance(x, list):
-                            self.make_object(x=x, y=y + offset, object_id=object_id[offset])
+                            self.make_object(walkable, x=x, y=y + offset, object_id=object_id[offset])
                         else:
-                            self.make_object(x=x + offset, y=y, object_id=object_id[offset])
+                            self.make_object(walkable, x=x + offset, y=y, object_id=object_id[offset])
 
         def linair_draw():
             # Make multiple single object in horizontal/vertical line
             if isinstance(object_id, int):
-                range_list = [x for x in range(x[0], x[1])] if isinstance(x, list) else [y for y in range(y[0], y[1])]
-                for list_index, offset in enumerate(range_list):
+                range1, range2 = (x[0], x[1]) if isinstance(x, list) else (y[0], y[1])
+
+                for offset in range(range1, range2+1):
                     if isinstance(x, list):
-                        self.make_object(x=range_list[list_index], y=y, object_id=object_id)
+                        self.make_object(walkable, x=offset, y=y, object_id=object_id)
                     else:
-                        self.make_object(x=x, y=range_list[list_index], object_id=object_id)
+                        self.make_object(walkable, x=x, y=offset, object_id=object_id)
             elif isinstance(object_id, list):
                 set_size = max([len(row) for row in object_id]), len(object_id)
                 range_list = [x for x in range(x[0], x[1], set_size[0])] if isinstance(x, list) else [y for y in
@@ -136,15 +107,15 @@ class MapHandler:
                     for y_row in range(0, len(object_id)):
                         for x_row in range(len(object_id[y_row])):
                             if isinstance(x, list):
-                                self.make_object(x=range_list[index] + x_row, y=y + y_row,
+                                self.make_object(walkable, x=range_list[index] + x_row, y=y + y_row,
                                                  object_id=object_id[y_row][x_row])
                             else:
-                                self.make_object(x=x + x_row, y=y_row + range_list[index],
+                                self.make_object(walkable, x=x + x_row, y=y_row + range_list[index],
                                                  object_id=object_id[y_row][x_row])
 
         def rectangulair_draw():
             if isinstance(object_id, int):
-                for tile_y in range(y[0], y[1]):
+                for tile_y in range(y[0], y[1]+1):
                     for tile_x in range(x[0], x[1]):
                         self.make_object(x=tile_x, y=tile_y, object_id=object_id)
             else:

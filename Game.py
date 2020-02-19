@@ -1,7 +1,5 @@
 from GameHandler import GameHandler
 
-from Misc.Settings import *
-
 import pygame as pg
 
 """
@@ -25,7 +23,6 @@ class Game(GameHandler):
         @func: start_game()
         @desc: Actual game loop actions foreach game tick that passes. 
     '''
-
     def start_game(self):
         self.init_components(self)
         new_update = pg.time.get_ticks() + 60

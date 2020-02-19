@@ -1,7 +1,7 @@
 {
   "0" : {
       "walkable" : true,
-      "category" : "terrain"
+      "category" : "terrain/grass"
   },
   "8" : {
       "colorkey" : [0, 0, 0]
@@ -25,3 +25,4 @@
       "colorkey" :[120, 195, 128]
   }
 }
+

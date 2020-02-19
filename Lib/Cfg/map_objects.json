@@ -1,0 +1,34 @@
+{
+ "calleas": {
+    "0" : {
+      "object_id": 7,
+      "x": 0,
+      "y": 5,
+      "walkable" : true,
+      "gamestate" : "callaes_forest"
+    },
+    "1" : {
+      "object_id": 7,
+      "x": 0,
+      "y": 4,
+      "walkable" : true,
+      "gamestate" : "callaes_forest"
+    }
+  },
+ "callaes_forest": {
+    "0" : {
+      "object_id": 7,
+      "x": 56,
+      "y": 5,
+      "walkable" : true,
+      "gamestate" : "callaes_forest"
+    },
+    "1" : {
+      "object_id": 7,
+      "x": 56,
+      "y": 4,
+      "walkable" : true,
+      "gamestate" : "callaes_forest"
+    }
+  }
+}

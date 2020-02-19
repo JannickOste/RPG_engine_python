@@ -1,16 +1,12 @@
 # Import interpeter packets.
 import pygame as pg
 
-# Import custom packets.
-from Entity.GameObject import GameObject
-from Entity.Player import Player
-from Entity.GameTile import FloorTile
-
 from Gfx.SpriteLoader import SpriteLoader
 from World.MapBuilder import MapBuilder
+from EventHandler import EventHandler
+from Entity.EntityHandler import EntityHandler
 
-from Misc.Camera import Camera
-from Misc.EventHandler import EventHandler
+from World.Camera import Camera
 from Misc.Settings import *
 
 '''
@@ -30,17 +26,15 @@ class GameHandler:
         self.running = False
 
         self.window, self.gamestate, self.clock = None, "", None
-        self.event_handler, self.sprite_handler, self.game_render = None, None, None
+        self.event_handler, self.sprite_handler, self.game_render, self.entity_handler = None, None, None, None
         self.map_handler = None
         self.camera, self.map_handler = None, None
 
-        self.sprites = {
-            "tiles": pg.sprite.Group(),
-            "objects": pg.sprite.Group(),
-            "player": pg.sprite.Group()
-        }
+        self.sprites = {}
 
         self.player = None
+        self.npcs = []
+        self.entitys_set = False
 
     '''
         @func: init_components(game_obj)
@@ -55,16 +49,18 @@ class GameHandler:
 
         # Game Globals
         self.running = True
-        self.gamestate = "camelot"
+        self.gamestate = "calleas"
         self.clock = pg.time.Clock()
         self.window = pg.display.set_mode(WINDOW_SIZE)
         self.delta = self.clock.tick(FPS) / 1000
 
         # Game Handlers
-        self.event_handler = EventHandler(game_obj)
         self.sprite_handler = SpriteLoader(game_obj)
+
+        self.entity_handler = EntityHandler(game_obj)
         self.map_handler = MapBuilder(game_obj)
-        self.map_handler.load()
+        self.map_handler.load(self.gamestate)
+        self.event_handler = EventHandler(game_obj)
 
         self.camera = Camera(self.map_handler.map_config["current_map"]["x_rows"] * TILESIZE,
                              self.map_handler.map_config["current_map"]["y_rows"] * TILESIZE)
@@ -86,7 +82,7 @@ class GameHandler:
         def draw_objects():
             for tile_group in list(self.sprites.keys()):
                 for tile in self.sprites[tile_group]:
-                    image = tile.image if tile_group != "player" else self.player.get_player_image()
+                    image = tile.image if tile_group != "player" else tile.get_walk_image(self.player)
                     self.window.blit(image, self.camera.apply(tile))
 
         draw_objects()
@@ -104,6 +100,9 @@ class GameHandler:
     '''
 
     def update(self):
-        for sprite_group in list(self.sprites.keys()):
+        for sprite_group in ["objects", "tiles"]:
             self.sprites[sprite_group].update()
+
+        self.entity_handler.update()
+
         self.camera.update(self.player)

@@ -1,0 +1,194 @@
+{
+  "1" : {
+    "object_id" : "light3",
+    "x" : [0, 64],
+    "y" : 0
+  },
+  "2" : {
+    "object_id" : 8,
+    "x" : 0,
+    "y" : 8
+  },
+  "3" : {
+    "object_id" : 9,
+    "x" : 1,
+    "y" : 8
+  },
+  "4" : {
+    "object_id" : "light4",
+    "x" : 0,
+    "y" : [9, 64]
+  },
+  "5" : {
+    "object_id" : "fountain",
+    "x" : 10,
+    "y" : 10
+  },
+  "6": {
+    "object_id" : "bench_large",
+    "x" : 5,
+    "y" : 8
+  },
+  "7": {
+    "object_id": "bench_large",
+    "x": 14,
+    "y": 8
+  },
+  "8" : {
+    "object_id": "light_bush",
+    "x": 0,
+    "y": [2, 3]
+  },
+  "9" : {
+    "object_id": "light_bush",
+    "x": 0,
+    "y": [6, 7]
+  },
+  "10" : {
+    "object_id": 178,
+    "x" : 4,
+    "y" : 7,
+    "info" : "fence corner top left"
+  },
+  "11" : {
+    "object_id": 184,
+    "x" : [5, 8],
+    "y" : 7,
+    "info" : "fence rail left"
+  },
+  "12" : {
+    "object_id": 180,
+    "x" : 9,
+    "y" : 7,
+    "info" : "fence gate left"
+  },
+  "13" : {
+    "object_id": 188,
+    "x" : 13,
+    "y" : 7,
+    "info" : "fence gate right"
+  },
+  "14" : {
+    "object_id": 184,
+    "x" : [14, 17],
+    "y" : 7,
+    "info" : "fence rail right"
+  },
+  "15" : {
+    "object_id": 179,
+    "x" : 18,
+    "y" : 7,
+    "info" : "fence corner top right"
+  },
+  "16" : {
+    "object_id": 176,
+    "x" : 4,
+    "y" : [8, 14],
+    "info" : "fence corner top left"
+  },
+  "17": {
+    "object_id": 176,
+    "x" : 4,
+    "y" : 15,
+    "info" : "fence rail left"
+  },
+  "18": {
+    "object_id": 186,
+    "x" : 4,
+    "y" : 15,
+    "info" : "fence corner btm left"
+  },
+  "19": {
+    "object_id": 184,
+    "x" : [5, 8],
+    "y" : 15,
+    "info" : "fence corner top left"
+  },
+  "20": {
+    "object_id": 184,
+    "x" : [5, 8],
+    "y" : 15,
+    "info" : "fence corner top left"
+  },
+  "21": {
+    "object_id": 184,
+    "x" : [14, 17],
+    "y" : 15,
+    "info" : "fence corner top left"
+  },
+  "22" : {
+    "object_id": 180,
+    "x" : 9,
+    "y" : 15,
+    "info" : "fence gate left"
+  },
+  "23" : {
+    "object_id": 188,
+    "x" : 13,
+    "y" : 15,
+    "info" : "fence gate right"
+  },
+  "24" : {
+    "object_id": 176,
+    "x" : 18,
+    "y" : [8, 14],
+    "info" : "fence corner top left"
+  },
+  "25" : {
+    "object_id": 187,
+    "x" : 18,
+    "y" : 15,
+    "info" : "fence corner top left"
+  },
+  "26": {
+    "object_id" : "bench2",
+    "x" : 5,
+    "y" : 14
+  },
+  "27": {
+    "object_id": "bench2",
+    "x": 14,
+    "y": 14
+  },
+  "28": {
+    "object_id": "light_long_grass",
+    "x": 2,
+    "y": 2,
+    "walkable" : true
+  },
+  "29": {
+    "object_id": "light_long_grass",
+    "x": 7,
+    "y": 3,
+    "walkable" : true
+  },
+  "30": {
+    "object_id": "large_rock",
+    "x": 3,
+    "y": 8
+  },
+  "31": {
+    "object_id" : "waterspot1",
+    "x" : 9,
+    "y" : 6
+  },
+  "32": {
+    "object_id" : "light_grass_dots",
+    "x" : 9,
+    "y" : 6
+  },
+  "33" : {
+    "object_id": 3,
+    "x": 1,
+    "y": 4,
+    "walkable" : true,
+    "gamestate" : "calleas_forest"
+  },
+  "34" : {
+    "object_id": 3,
+    "x": 1,
+    "y": 5,
+    "walkable" : true,
+    "gamestate" : "calleas_forest"
+  }
+}

@@ -1,19 +1,26 @@
 {
-  "camelot" : {
+  "calleas" : {
       "player" : {
         "x" : 5,
         "y" : 5,
         "id" : "npc_1"
       },
       "1" : {
-        "x" : 4,
-        "y" : 3,
+        "x" : 6,
+        "y" : 8,
         "id" : "npc_2"
       },
       "2" : {
-        "x" : 6,
-        "y" : 3,
+        "x" : 5,
+        "y" : 8,
         "id" : "npc_3"
+      }
+  },
+  "calleas_forest" : {
+      "player" : {
+        "x" : 55,
+        "y" : 5,
+        "id" : "npc_1"
       }
   }
 }
